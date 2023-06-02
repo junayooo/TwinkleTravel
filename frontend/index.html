@@ -236,6 +236,112 @@
   </head>
 
   <body>
+    <form>
+      <h1>회원가입</h1>
+      <div>email : <input type="email" id="signUpEmail" /></div>
+      <div>password : <input type="password" id="signUpPassword" /></div>
+      <button type="submit" id="signUpButton">회원가입 하기</button>
+    </form>
+    <form>
+      <h1>로그인</h1>
+      <div>email : <input type="email" id="signInEmail" /></div>
+      <div>password : <input type="password" id="signInPassword" /></div>
+      <button type="submit" id="signInButton">로그인 하기</button>
+    </form>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyBq42LzIFD0TnG8Tra3Mz59bDDhnEiRqBw",
+        authDomain: "twinklelogin-68655.firebaseapp.com",
+        projectId: "twinklelogin-68655",
+        storageBucket: "twinklelogin-68655.appspot.com",
+        messagingSenderId: "524273054320",
+        appId: "1:524273054320:web:05f173567117f568fcfab5",
+        measurementId: "G-ZPZKNCQ1E7",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+      const auth = getAuth();
+
+      function showAlert(message) {
+        alert(message);
+      }
+
+      document
+        .getElementById("signUpButton")
+        .addEventListener("click", (event) => {
+          event.preventDefault();
+          const signUpEmail = document.getElementById("signUpEmail").value;
+          const signUpPassword =
+            document.getElementById("signUpPassword").value;
+
+          if (
+            !/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/.test(signUpPassword)
+          ) {
+            showAlert(
+              "비밀번호는 영어와 숫자를 포함한 8자 이상 16자 이하로 입력해주세요."
+            );
+            return;
+          }
+
+          createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword)
+            .then((userCredential) => {
+              console.log(userCredential);
+              // Signed in
+              const user = userCredential.user;
+              showAlert("회원가입완료!");
+              // ...
+            })
+            .catch((error) => {
+              console.log("error");
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              // ..
+            });
+        });
+
+      document
+        .getElementById("signInButton")
+        .addEventListener("click", (event) => {
+          event.preventDefault();
+          const signInEmail = document.getElementById("signInEmail").value;
+          const signInPassword =
+            document.getElementById("signInPassword").value;
+
+          signInWithEmailAndPassword(auth, signInEmail, signInPassword)
+            .then((userCredential) => {
+              // Signed in
+              console.log(userCredential);
+              const user = userCredential.user;
+              showAlert("로그인되었습니다!");
+              // ...
+            })
+            .catch((error) => {
+              console.log("로그인 실패");
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              showAlert("이메일 또는 비밀번호가 잘못되었습니다.");
+            });
+        });
+    </script>
+
     <div id="intro" class="intro-container">
       <h1 class="intro-heading">TWINKLE</h1>
       <div class="form-container">
