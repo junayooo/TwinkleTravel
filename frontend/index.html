@@ -232,17 +232,76 @@
       .form-button:hover {
         background-color: #45a049;
       }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f2f2f2;
+      }
+
+      /* 폼 스타일 */
+      form {
+        width: 400px;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      div {
+        margin-bottom: 16px;
+        color: #333;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
     </style>
   </head>
 
   <body>
-    <form>
+    <form id="sign">
       <h1>회원가입</h1>
       <div>email : <input type="email" id="signUpEmail" /></div>
       <div>password : <input type="password" id="signUpPassword" /></div>
       <button type="submit" id="signUpButton">회원가입 하기</button>
     </form>
-    <form>
+    <form id="login">
       <h1>로그인</h1>
       <div>email : <input type="email" id="signInEmail" /></div>
       <div>password : <input type="password" id="signInPassword" /></div>
@@ -331,6 +390,9 @@
               console.log(userCredential);
               const user = userCredential.user;
               showAlert("로그인되었습니다!");
+              document.getElementById("intro").style.display = "block";
+              document.getElementById("sign").style.display = "none";
+              document.getElementById("login").style.display = "none";
               // ...
             })
             .catch((error) => {
@@ -342,7 +404,7 @@
         });
     </script>
 
-    <div id="intro" class="intro-container">
+    <div id="intro" class="intro-container" style="display: none">
       <h1 class="intro-heading">TWINKLE</h1>
       <div class="form-container">
         <div class="form-row">
@@ -377,6 +439,10 @@
           <label for="purpose" class="form-label">여행 목적:</label>
           <input type="text" id="purpose" class="form-input" required />
         </div>
+        <div class="form-row">
+          <label for="place" class="form-label">여행지:</label>
+          <input type="text" id="place" class="form-input" required />
+        </div>
         <button onclick="start()" class="form-button">twinkle chat</button>
       </div>
     </div>
@@ -405,6 +471,7 @@
       let Transportation = "";
       let Companions = "";
       let Purpose = "";
+      let Place = "";
 
       function spinner() {
         document.getElementById("loader").style.display = "block";
@@ -416,6 +483,7 @@
         const transportation = document.getElementById("transportation").value;
         const companions = document.getElementById("companions").value;
         const purpose = document.getElementById("purpose").value;
+        const place = document.getElementById("place").value;
         if (startDate === "") {
           alert("시작일을 입력해주세요.");
           return;
@@ -430,6 +498,7 @@
         Transportation = transportation;
         Companions = companions;
         Purpose = purpose;
+        Place = place;
 
         document.getElementById("intro").style.display = "none";
         document.getElementById("chat").style.display = "block";
@@ -460,6 +529,7 @@
             Transportation: Transportation,
             Companions: Companions,
             Purpose: Purpose,
+            Place: Place,
             userMessages: userMessages,
             assistantMessages: assistantMessages,
           }),
