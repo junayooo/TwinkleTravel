@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chat UI Screen</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+
+      .chat-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .chat-box {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        overflow-y: scroll;
+        height: 300px;
+      }
+
+      .chat-message {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-message p {
+        margin: 0;
+        padding: 0;
+      }
+
+      .chat-input {
+        display: flex;
+        margin-top: 20px;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      .chat-input button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .chat-input button:hover {
+        background-color: #45a049;
+      }
+
+      .assistant {
+        color: blue;
+      }
+
+      .intro-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .intro-container img {
+        width: 50%;
+        min-width: 300px;
+        margin-bottom: 20px;
+      }
+
+      .intro-container label {
+        margin-top: 10px;
+      }
+
+      .intro-container input,
+      .intro-container select {
+        margin-bottom: 10px;
+      }
+
+      .intro-container button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .intro-container button:hover {
+        background-color: #45a049;
+      }
+
+      #loader {
+        font-size: 25px;
+        text-align: center;
+      }
+
+      .chat-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .chat-box {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-message {
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .chat-message p {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+      }
+
+      .chat-input {
+        display: flex;
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        font-size: 14px;
+      }
+
+      .chat-input button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .chat-input button:hover {
+        background-color: #45a049;
+      }
+
+      .assistant {
+        color: #007bff;
+      }
+
+      .intro-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+      }
+
+      .intro-heading {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      .form-container {
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        width: 120px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .form-input,
+      .form-select {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      .form-button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .form-button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="intro" class="intro-container">
+      <h1 class="intro-heading">TWINKLE</h1>
+      <div class="form-container">
+        <div class="form-row">
+          <label for="startDate" class="form-label">시작일</label>
+          <input id="startDate" type="date" class="form-input" />
+        </div>
+        <div class="form-row">
+          <label for="endDate" class="form-label">종료일</label>
+          <input id="endDate" type="date" class="form-input" />
+        </div>
+        <div class="form-row">
+          <label for="transportation" class="form-label">교통 수단:</label>
+          <select id="transportation" class="form-select" required>
+            <option value="">선택해주세요</option>
+            <option value="대중교통">대중교통</option>
+            <option value="자동차">자동차</option>
+            <option value="기차">기차</option>
+            <option value="비행기">비행기</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="companions" class="form-label">동행인 수:</label>
+          <input
+            type="number"
+            id="companions"
+            min="0"
+            class="form-input"
+            required
+          />
+        </div>
+        <div class="form-row">
+          <label for="purpose" class="form-label">여행 목적:</label>
+          <input type="text" id="purpose" class="form-input" required />
+        </div>
+        <button onclick="start()" class="form-button">twinkle chat</button>
+      </div>
+    </div>
+
+    <div id="chat" class="chat-container" style="display: none">
+      <div class="chat-box">
+        <div class="chat-message assistant">
+          <p>안녕하세요! 저는 트윙클입니다. 여행지를 추천해드려요!</p>
+        </div>
+      </div>
+      <div id="loader" class="loader" style="display: none">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+      <div class="chat-input">
+        <input type="text" placeholder="Type your message here..." />
+        <button id="btn" onclick="spinner()">Send</button>
+      </div>
+    </div>
+
+    <script>
+      const chatBox = document.querySelector(".chat-box");
+      let userMessages = [];
+      let assistantMessages = [];
+      let StartDate = "";
+      let EndDate = "";
+      let Transportation = "";
+      let Companions = "";
+      let Purpose = "";
+
+      function spinner() {
+        document.getElementById("loader").style.display = "block";
+      }
+
+      function start() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        const transportation = document.getElementById("transportation").value;
+        const companions = document.getElementById("companions").value;
+        const purpose = document.getElementById("purpose").value;
+        if (startDate === "") {
+          alert("시작일을 입력해주세요.");
+          return;
+        }
+        StartDate = startDate;
+        if (endDate === "") {
+          alert("종료일을 입력해주세요.");
+          return;
+        }
+        EndDate = endDate;
+
+        Transportation = transportation;
+        Companions = companions;
+        Purpose = purpose;
+
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("chat").style.display = "block";
+      }
+
+      const sendMessage = async () => {
+        const chatInput = document.querySelector(".chat-input input");
+        const chatMessage = document.createElement("div");
+        chatMessage.classList.add("chat-message");
+        chatMessage.innerHTML = `
+    <p>${chatInput.value}</p>
+  `;
+        chatBox.appendChild(chatMessage);
+
+        //userMessage 메세지 추가
+        userMessages.push(chatInput.value);
+
+        chatInput.value = "";
+
+        const response = await fetch("http://localhost:3000/travelGuide", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            StartDate: StartDate,
+            EndDate: EndDate,
+            Transportation: Transportation,
+            Companions: Companions,
+            Purpose: Purpose,
+            userMessages: userMessages,
+            assistantMessages: assistantMessages,
+          }),
+        });
+
+        const data = await response.json();
+        document.getElementById("loader").style.display = "none";
+
+        //assistantMessage 메세지 추가
+        assistantMessages.push(data.assistant);
+
+        const astrologerMessage = document.createElement("div");
+        astrologerMessage.classList.add("chat-message");
+        astrologerMessage.innerHTML = `
+    <p class='assistant'>${data.assistant}</p>
+  `;
+        chatBox.appendChild(astrologerMessage);
+      };
+
+      document
+        .querySelector(".chat-input button")
+        .addEventListener("click", sendMessage);
+    </script>
+  </body>
+</html>
