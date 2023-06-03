@@ -1,11 +1,17 @@
-const apiKey = "";
+// const apiKey = "";
 const { Configuration, OpenAIApi } = require("openai");
 const express = require('express')
 var cors = require('cors')
 const app = express()
 
+const { Client } = require('@googlemaps/google-maps-services-js');
+const google = new Client({});
+const axios = require('axios');
+
+require('dotenv').config();
+
 const configuration = new Configuration({
-    apiKey: apiKey,
+    apiKey: process.env.OPENAI_API_KEY,
   });
 const openai = new OpenAIApi(configuration);
 
@@ -56,4 +62,48 @@ app.post('/travelGuide', async function (req, res) {
     res.json({"assistant": travel});
 });
 
+ // googlemaps API
+ const apiKey = process.env.MAPS_API_KEY;
+ const address = '서울';
+ const encodedAddress = encodeURI(address);
+ app.get('/map', (req, res) => {
+   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`)
+     .then((response) => {
+       const results = response.data.results;
+       if (results.length > 0 && results[0].geometry) {
+         const { lat, lng } = results[0].geometry.location;
+         const latLng = `${lat},${lng}`;
+         const radius = 10000; // 검색 반경 (미터)
+         const type = 'tourist_attraction'; // 검색할 장소 유형
+ 
+         google.placesNearby({
+           params: {
+             location: latLng,
+             radius: radius,
+             type: type,
+             key: apiKey,
+           },
+         })
+           .then((response) => {
+             //응답 처리
+             // res.json(response.data.results);
+             // const names = response.data.results.map(place => place.name);
+             console.log(response.data.results.map(place => place.name, place => place.vicinity));
+           })
+           .catch((err) => {
+             console.log(err);
+             res.status(500).send('Error occurred while searching places1.');
+           });
+       } else {
+         res.status(500).send('Error occurred while searching places2.');
+       }
+     })
+     .catch((error) => {
+       console.log(error);
+       res.status(500).send('Error occurred while searching places3.');
+     });
+     
+ });
+
 app.listen(3000)
+
