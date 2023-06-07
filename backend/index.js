@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 // POST method route
 app.post('/travelGuide', async function (req, res) {
-    let { StartDate, EndDate,Transportation,Companions, Purpose,userMessages, assistantMessages} = req.body
+    let { StartDate, EndDate,Transportation,Companions, Purpose, place, userMessages, assistantMessages} = req.body
 
 
 
@@ -64,46 +64,41 @@ app.post('/travelGuide', async function (req, res) {
 
  // googlemaps API
  const apiKey = process.env.MAPS_API_KEY;
- const address = '서울';
- const encodedAddress = encodeURI(address);
- app.get('/map', (req, res) => {
-   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`)
-     .then((response) => {
-       const results = response.data.results;
-       if (results.length > 0 && results[0].geometry) {
-         const { lat, lng } = results[0].geometry.location;
-         const latLng = `${lat},${lng}`;
-         const radius = 10000; // 검색 반경 (미터)
-         const type = 'tourist_attraction'; // 검색할 장소 유형
- 
-         google.placesNearby({
-           params: {
-             location: latLng,
-             radius: radius,
-             type: type,
-             key: apiKey,
-           },
-         })
-           .then((response) => {
-             //응답 처리
-             // res.json(response.data.results);
-             // const names = response.data.results.map(place => place.name);
-             console.log(response.data.results.map(place => place.name, place => place.vicinity));
-           })
-           .catch((err) => {
-             console.log(err);
-             res.status(500).send('Error occurred while searching places1.');
-           });
-       } else {
-         res.status(500).send('Error occurred while searching places2.');
-       }
-     })
-     .catch((error) => {
-       console.log(error);
-       res.status(500).send('Error occurred while searching places3.');
-     });
-     
- });
+const address = '서울';
+const encodedAddress = encodeURI(address);
+
+app.get('/map', async (req, res) => {
+  try {
+    const geocodeResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`);
+    const results = geocodeResponse.data.results;
+
+    if (results.length > 0 && results[0].geometry) {
+      const { lat, lng } = results[0].geometry.location;
+      const latLng = `${lat},${lng}`;
+      const radius = 10000; // 검색 반경 (미터)
+      const type = 'tourist_attraction'; // 검색할 장소 유형
+
+      const placesResponse = await google.placesNearby({
+        params: {
+          location: latLng,
+          radius: radius,
+          type: type,
+          key: apiKey,
+        },
+      });
+
+      const placeNames = placesResponse.data.results.map(place => place.name);
+
+      console.log(placeNames);
+      res.json(placesResponse.data.results);
+    } else {
+      res.status(500).send('Error occurred while searching places.');
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error occurred while searching places.');
+  }
+});
 
 app.listen(3000)
 
