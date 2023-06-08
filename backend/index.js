@@ -5,16 +5,20 @@ const app = express()
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey.json');
 
-const { Client } = require('@googlemaps/google-maps-services-js');
-const google = new Client({});
-const axios = require('axios');
 
-require('dotenv').config();
+const serviceAccount = require('./serviceAccountKey.json');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+  apiKey: apiKey,
+});
+
 const openai = new OpenAIApi(configuration);
+
 
 //CORS 이슈 해결
 // let corsOptions = {
@@ -28,10 +32,11 @@ app.use(express.urlencoded({ extended: true }));
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
+
 const db = admin.firestore();
 
-// POST method route
 app.post('/travelGuide', async function (req, res) {
+
     const { 
       StartDate, 
       EndDate,
@@ -85,11 +90,13 @@ app.post('/travelGuide', async function (req, res) {
       travel
     });
 
-    res.json({"assistant": travel});
+
+  res.json({ "assistant": travel });
 });
 
 // 파이어스토어에서 데이터를 가져와 HTML로 표시하는 엔드포인트 추가
 app.get('/travelLogs', async function (req, res) {
+
   try {
     const querySnapshot = await db.collection('travelLogs').get();
     const data = [];
@@ -110,37 +117,18 @@ const address = '서울';
 const encodedAddress = encodeURI(address);
 
 app.get('/map', async (req, res) => {
+
   try {
-    const geocodeResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`);
-    const results = geocodeResponse.data.results;
-
-    if (results.length > 0 && results[0].geometry) {
-      const { lat, lng } = results[0].geometry.location;
-      const latLng = `${lat},${lng}`;
-      const radius = 10000; // 검색 반경 (미터)
-      const type = 'tourist_attraction'; // 검색할 장소 유형
-
-      const placesResponse = await google.placesNearby({
-        params: {
-          location: latLng,
-          radius: radius,
-          type: type,
-          key: apiKey,
-        },
-      });
-
-      const placeNames = placesResponse.data.results.map(place => place.name);
-
-      console.log(placeNames);
-      res.json(placesResponse.data.results);
-    } else {
-      res.status(500).send('Error occurred while searching places.');
-    }
+    const querySnapshot = await db.collection('travelLogs').get();
+    const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    res.send(data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send('Error occurred while searching places.');
+    console.log('Error getting documents: ', error);
+    res.status(500).send('Error getting documents');
   }
 });
 
-app.listen(3000)
-
+app.listen(3000);

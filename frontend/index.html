@@ -10,7 +10,291 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+
+      .chat-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .chat-box {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        overflow-y: scroll;
+        height: 300px;
+      }
+
+      .chat-message {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-message p {
+        margin: 0;
+        padding: 0;
+      }
+
+      .chat-input {
+        display: flex;
+        margin-top: 20px;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      .chat-input button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .chat-input button:hover {
+        background-color: #45a049;
+      }
+
+      .assistant {
+        color: blue;
+      }
+
+      .intro-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .intro-container img {
+        width: 50%;
+        min-width: 300px;
+        margin-bottom: 20px;
+      }
+
+      .intro-container label {
+        margin-top: 10px;
+      }
+
+      .intro-container input,
+      .intro-container select {
+        margin-bottom: 10px;
+      }
+
+      .intro-container button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .intro-container button:hover {
+        background-color: #45a049;
+      }
+
+      #loader {
+        font-size: 25px;
+        text-align: center;
+      }
+
+      .chat-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .chat-box {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-message {
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .chat-message p {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+      }
+
+      .assistant {
+        color: #007bff;
+      }
+
+      .intro-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+      }
+
+      .intro-heading {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      .form-container {
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        width: 120px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .form-input,
+      .form-select {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      .form-button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .form-button:hover {
+        background-color: #45a049;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f2f2f2;
+      }
+
+      /* 폼 스타일 */
+      form {
+        width: 400px;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      div {
+        margin-bottom: 16px;
+        color: #333;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .chat-input {
+        display: flex;
+        margin-top: 20px;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        font-size: 14px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        background-color: #f2f2f2;
+      }
+
+      .chat-input button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+
+      .chat-input button:hover {
+        background-color: #45a049;
+      }
+    </style>
   </head>
 
   <body>
@@ -36,7 +320,6 @@
 
       // Your web app's Firebase configuration
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      
       const firebaseConfig = {
         apiKey: "AIzaSyBq42LzIFD0TnG8Tra3Mz59bDDhnEiRqBw",
         authDomain: "twinklelogin-68655.firebaseapp.com",
@@ -184,6 +467,8 @@
       </div>
     </div>
 
+
+
     <script>
       const chatBox = document.querySelector(".chat-box");
       let userMessages = [];
@@ -273,9 +558,11 @@
 
       document
         .querySelector(".chat-input button")
+
         .addEventListener("click", sendMessage);
 
         function fetchTravelLogs() {
+
         fetch("http://localhost:3000/travelLogs")
           .then(response => response.json())
           .then(data => {
@@ -296,6 +583,7 @@
 
       fetchTravelLogs();
       document.getElementById("intro").style.display = "block";
+
     </script>
   </body>
 </html>
