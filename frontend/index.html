@@ -558,9 +558,11 @@
 
       document
         .querySelector(".chat-input button")
-        .addEventListener("click", sendMessage);  
 
-      function fetchTravelLogs() {
+        .addEventListener("click", sendMessage);
+
+        function fetchTravelLogs() {
+
         fetch("http://localhost:3000/travelLogs")
           .then(response => response.json())
           .then(data => {
@@ -581,7 +583,7 @@
 
       fetchTravelLogs();
       document.getElementById("intro").style.display = "block";
-      
+
     </script>
   </body>
 </html>
