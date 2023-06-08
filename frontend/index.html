@@ -124,6 +124,8 @@
         });
     </script>
 
+    <h1>Travel Logs</h1>
+    <ul id="travelList"></ul>
     <div id="intro" class="intro-container" style="display: none">
       <h1 class="intro-heading">TWINKLE</h1>
       <div class="form-container">
@@ -272,6 +274,28 @@
       document
         .querySelector(".chat-input button")
         .addEventListener("click", sendMessage);
+
+        function fetchTravelLogs() {
+        fetch("http://localhost:3000/travelLogs")
+          .then(response => response.json())
+          .then(data => {
+            const travelList = document.getElementById("travelList");
+            data.forEach(item => {
+              const li = document.createElement("li");
+              const text = document.createTextNode(
+                `${item.StartDate} - ${item.EndDate}: ${item.travel}`
+              );
+              li.appendChild(text);
+              travelList.appendChild(li);
+            });
+          })
+          .catch(error => {
+            console.log("Error fetching travel logs:", error);
+          });
+      }
+
+      fetchTravelLogs();
+      document.getElementById("intro").style.display = "block";
     </script>
   </body>
 </html>
