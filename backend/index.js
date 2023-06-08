@@ -107,7 +107,7 @@ app.get('/travelLogs', async function (req, res) {
 
 // googlemaps API
 const apiKey = process.env.MAPS_API_KEY;
-const address = place;
+const address = '서울';
 const encodedAddress = encodeURI(address);
 
 app.get('/map', async (req, res) => {
