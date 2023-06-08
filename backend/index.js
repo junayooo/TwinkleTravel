@@ -1,4 +1,3 @@
-// const apiKey = "";
 const { Configuration, OpenAIApi } = require("openai");
 const express = require('express')
 var cors = require('cors')
