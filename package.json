@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.3.31",
+    "axios": "^1.4.0",
     "cors": "2.8.5",
     "dotenv": "^16.1.4",
     "express": "4.18.2",
