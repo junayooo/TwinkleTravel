@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyBq42LzIFD0TnG8Tra3Mz59bDDhnEiRqBw",
     authDomain: "twinklelogin-68655.firebaseapp.com",
@@ -69,7 +70,8 @@ document.getElementById("signInButton").addEventListener("click", (event) => {
       document.getElementById("sign").style.display = "none";
       document.getElementById("login").style.display = "none";
       document.getElementById("intro").style.display = "block";
-      // ...
+      
+
     })
     .catch((error) => {
       console.log("로그인 실패");
@@ -78,3 +80,6 @@ document.getElementById("signInButton").addEventListener("click", (event) => {
       showAlert("이메일 또는 비밀번호가 잘못되었습니다.");
     });
 });
+
+
+

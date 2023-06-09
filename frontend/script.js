@@ -8,10 +8,11 @@ let Companions = "";
 let Purpose = "";
 let Place = "";
 let obtainedPlace = [];
-
+let types = [];
 function spinner() {
   document.getElementById("loader").style.display = "block";
 }
+
 
 async function start() {
   const startDate = document.getElementById("startDate").value;
@@ -36,9 +37,24 @@ async function start() {
   Companions = companions;
   Purpose = purpose;
   Place = place;
-
+  types = [
+    "amusement_park", 
+    "aquarium", 
+    "art_gallery",
+    "museum",
+    "shopping_mall",
+    "tourist_attraction",
+    "landmark",
+    "zoo",
+    "park",
+    "bar",
+    "cafe",
+    "restaurant",
+    "lodging"
+  ];
   document.getElementById("intro").style.display = "none";
   document.getElementById("chat").style.display = "block";
+
   const placeRequest = await fetch("http://localhost:3000/map", {
     method: "POST",
     headers: {
@@ -46,6 +62,7 @@ async function start() {
     },
     body: JSON.stringify({
       Place: Place,
+      types: types,
     }),
   });
 

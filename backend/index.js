@@ -30,15 +30,12 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 
-
 // googlemaps API
 const apiKey = process.env.MAPS_API_KEY;
 
 app.post("/map", async function (req, res) {
   try {
-    const {
-      Place
-    } = req.body;
+    const { Place, types } = req.body;
     const encodedAddress = encodeURI(Place);
     const geocodeResponse = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
@@ -49,30 +46,38 @@ app.post("/map", async function (req, res) {
       const { lat, lng } = results[0].geometry.location;
       const latLng = `${lat},${lng}`;
       const radius = 10000; // 검색 반경 (미터)
-      const type = "tourist_attraction"; // 검색할 장소 유형
+      // const type = "tourist_attraction"; // 검색할 장소 유형
+      const obtainedPlaces = {};
 
-      const placesResponse = await google.placesNearby({
-        params: {
-          location: latLng,
-          radius: radius,
-          type: type,
-          key: apiKey,
-        },
-      });
-      
-      const obtainedPlace = placesResponse.data.results.map((Place) => Place.name);
-      console.log(obtainedPlace);
-      res.json({tourist_attraction : obtainedPlace});
+      for (const type of types) {
+        const placesResponse = await google.placesNearby({
+          params: {
+            location: latLng,
+            radius: radius,
+            type: type,
+            key: apiKey,
+          },
+        });
+
+        const places = placesResponse.data.results.map(
+          (Place) => Place.name
+        );
+        obtainedPlaces[type] = places;
+      }
+      console.log(obtainedPlaces);
+      res.json(obtainedPlaces);
     } else {
-      res.status(500).send({error : "Error occurred while searching places."});
+      res.status(500).send({ error: "Error occurred while searching places." });
       return; // 오류 발생 시 함수를 종료합니다.
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send({error : "Error occurred while searching places."});
+    res.status(500).send({ error: "Error occurred while searching places." });
     return; // 오류 발생 시 함수를 종료합니다.
   }
 });
+
+
 
 // POST method route
 app.post("/travelGuide", async function (req, res) {
@@ -163,6 +168,5 @@ app.get("/travelLogs", async function (req, res) {
     res.status(500).send("Error getting documents");
   }
 });
-
 
 app.listen(3000);
