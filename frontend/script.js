@@ -7,6 +7,10 @@ let Transportation = "";
 let Companions = "";
 let Purpose = "";
 let Place = "";
+let Act_rest="";
+let Town="";
+let Memory="";
+let Plan="";
 let obtainedPlace = [];
 let types = [];
 function spinner() {
@@ -21,6 +25,10 @@ async function start() {
   const companions = document.getElementById("companions").value;
   const purpose = document.getElementById("purpose").value;
   const place = document.getElementById("place").value;
+  const act_rest=document.getElementById("act_rest").value;
+  const town=document.getElementById("town").value;
+  const memory=document.getElementById("memory").value;
+  const plan=document.getElementById("plan").value;
  
   if (startDate === "") {
     alert("시작일을 입력해주세요.");
@@ -37,6 +45,10 @@ async function start() {
   Companions = companions;
   Purpose = purpose;
   Place = place;
+  Act_rest=act_rest;
+  Town=town;
+  Memory=memory;
+  Plan=plan;
   types = [
     "amusement_park", 
     "aquarium", 
@@ -97,6 +109,11 @@ const sendMessage = async () => {
       Companions: Companions,
       Purpose: Purpose,
       Place: Place,
+      Act_rest:Act_rest,
+      Town:Town,
+      Memory:Memory,
+      Plan:Plan,
+
       userMessages: userMessages,
       assistantMessages: assistantMessages,
       obtainedPlace : obtainedPlace
