@@ -8,7 +8,7 @@ body {
 .chat-container {
   max-width: 500px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0px;
 }
 
 .chat-box {
@@ -99,7 +99,7 @@ body {
 }
 
 .intro-container button:hover {
-  background-color: #45a049;
+  background-color: #e3c902;
 }
 
 #loader {
@@ -109,8 +109,8 @@ body {
 
 .chat-container {
   max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .chat-box {
@@ -187,7 +187,7 @@ body {
 }
 
 .form-button:hover {
-  background-color: #45a049;
+  background-color: #e3c902;
 }
 
 .container {
@@ -246,7 +246,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #e3c902;
 }
 
 .chat-input {
@@ -279,5 +279,135 @@ button:hover {
 }
 
 .chat-input button:hover {
-  background-color: #45a049;
+  background-color: #e3c902;
 }
+
+
+
+
+/* 가운데 정렬을 위한 스타일 */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* h1 스타일 */
+.intro-heading {
+  text-align: center;
+}
+
+/* 폼 스타일 */
+form {
+  width: 300px;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+
+h1 {
+  text-align: center;
+  margin-right: 50px;
+}
+
+div {
+  margin-bottom: 10px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"],
+button[type="button"] {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ffe100;
+  color: white;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background-color: #e3c902;
+}
+
+/* 반응형 스타일 */
+@media screen and (max-width: 600px) {
+  form {
+    width: 90%;
+  }
+}
+
+img {
+  margin-right: 50px;
+}
+
+#login {
+  background-color: #fff7b8;
+}
+
+.intro-container {
+  
+    width: 300px;
+    padding: 20px;
+    background-color: #fff7b8;;
+    border-radius: 40px;
+  
+}
+
+
+.intro-container button {
+  background-color: #ffe100;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  
+}
+
+.intro-container button[type="button"] :hover {
+  background-color: #e3c902;
+}
+
+.chat-container {
+  width: 400px;
+    padding: 20px;
+    background-color: #fff7b8;;
+    border-radius: 20px;
+}
+
+.chat-box  {
+  background-color: #fffce3;
+}
+.chat-input input {
+  background-color: #fffce3;
+  outline-color: #ffe100;
+}
+
+.chat-input button {
+  background-color: #ffe100;
+border-radius: 20px;}
+
+.chat-input button[type="button"] :hover {
+  background-color: #e3c902;
+}
+
+
+.assistant {
+  color: white;
+  background-color: #f5de33;
+
+}
+
+form {
+  background-color: #fff7b8;
+}
+
