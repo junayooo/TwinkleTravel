@@ -48,10 +48,7 @@ document.getElementById("signUpButton").addEventListener("click", (event) => {
       document.getElementById("sign").style.display = "none";
     })
     .catch((error) => {
-      console.log("error");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
+      console.log("error", error.code, error.message);
     });
 });
 
@@ -64,22 +61,35 @@ document.getElementById("signInButton").addEventListener("click", (event) => {
     .then((userCredential) => {
       // Signed in
       console.log(userCredential);
-      const user = userCredential.user;
+      localStorage.setItem("userToken", userCredential.user.token);
+
       showAlert("로그인되었습니다!");
       document.getElementById("intro").style.display = "block";
       document.getElementById("sign").style.display = "none";
       document.getElementById("login").style.display = "none";
       document.getElementById("intro").style.display = "block";
       
-
     })
     .catch((error) => {
-      console.log("로그인 실패");
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      console.log("로그인 실패", error.code, error.message);
       showAlert("이메일 또는 비밀번호가 잘못되었습니다.");
     });
 });
 
 
-
+document.addEventListener("DOMContentLoaded", () => {
+  const userToken = localStorage.getItem("userToken");
+  if (userToken) {
+    // 토큰이 있는 경우, 사용자가 이미 로그인된 것으로 간주합니다.
+    // 로그인 상태를 유지하고 원하는 동작을 수행합니다.
+    document.getElementById("intro").style.display = "block";
+    document.getElementById("sign").style.display = "none";
+    document.getElementById("login").style.display = "none";
+  } else {
+    // 토큰이 없는 경우, 사용자는 로그인되지 않은 상태입니다.
+    // 로그인 화면을 표시합니다.
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("sign").style.display = "none";
+    document.getElementById("login").style.display = "block";
+  }
+});
