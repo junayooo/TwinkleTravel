@@ -14,23 +14,25 @@
   </head>
 
   <body>
-    <h1 class="intro-heading">TWINKLE</h1>
+    <div>
+      <h1 class="intro-heading">TWINKLE</h1>
+      <img src="star.png" />
+    </div>
 
-    <form id="login" style="display: block;">
+    <form id="login" style="display: block">
       <h1>로그인</h1>
       <div>email : <input type="email" id="signInEmail" /></div>
       <div>password : <input type="password" id="signInPassword" /></div>
       <button type="submit" id="signInButton">로그인 하기</button>
       <button type="button" id="showSignUpButton">회원가입</button>
     </form>
-    <form id="sign" style="display: none;">
+    <form id="sign" style="display: none">
       <h1>회원가입</h1>
       <div>email : <input type="email" id="signUpEmail" /></div>
       <div>password : <input type="password" id="signUpPassword" /></div>
       <button type="submit" id="signUpButton">회원가입 하기</button>
     </form>
 
-    
     <div id="intro" class="intro-container" style="display: none">
       <div class="form-container">
         <div class="form-row">
@@ -69,14 +71,32 @@
           <label for="purpose" class="form-label">여행 목적:</label>
           <input type="text" id="purpose" class="form-input" required />
         </div>
-        
+        <div class="form-row">
+          <label for="act_rest" class="form-label">Q1 : 활동 vs 휴식</label>
+          <input type="text" id="act_rest" class="form-input" required />
+        </div>
+        <div class="form-row">
+          <label for="town" class="form-label"
+            >Q2 : (현지 체험) 선호 vs 불호</label
+          >
+          <input type="text" id="town" class="form-input" required />
+        </div>
+        <div class="form-row">
+          <label for="memory" class="form-label"
+            >Q3 : 여행했을 때 가장 행복했던 기억이나 추억</label
+          >
+          <input type="text" id="memory" class="form-input" required />
+        </div>
+        <div class="form-row">
+          <label for="plan" class="form-label">Q4 : 계획 vs 즉흥</label>
+          <input type="text" id="plan" class="form-input" required />
+        </div>
+        <div class="form-row">
+          <label for="place" class="form-label">Q5 : </label>
+          <input type="text" id="place" class="form-input" required />
+        </div>
         <button onclick="start()" class="form-button">twinkle chat</button>
       </div>
-    </div>
-
-    <div id="Logs" style="display: none">
-      <h1>Travel Logs</h1>
-      <ul id="travelList"></ul>
     </div>
 
     <div id="chat" class="chat-container" style="display: none">
@@ -92,6 +112,10 @@
         <input type="text" placeholder="Type your message here..." />
         <button id="btn" onclick="spinner()">Send</button>
       </div>
+    </div>
+    <div id="Logs" style="display: none">
+      <h1>Travel Logs</h1>
+      <ul id="travelList"></ul>
     </div>
 
     <script src="firebase.js" type="module"></script>

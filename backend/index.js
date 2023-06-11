@@ -11,6 +11,8 @@ const axios = require("axios");
 
 require("dotenv").config();
 
+const serverless = require('serverless-http');
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -18,10 +20,11 @@ const openai = new OpenAIApi(configuration);
 
 //CORS 이슈 해결
 // let corsOptions = {
-//     origin: 'https://www.domain.com',
+//     origin: 'https://twinkletravel.pages.dev',
 //     credentials: true
 // }
 app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -121,6 +124,10 @@ app.post("/travelGuide", async function (req, res) {
     Companions,
     Purpose,
     Place,
+    Act_rest,
+    Town,
+    Memory,
+    Plan,
     userMessages,
     assistantMessages,
     obtainedPlace,
@@ -144,7 +151,7 @@ app.post("/travelGuide", async function (req, res) {
     },
     {
       role: "user",
-      content: `저는 ${Place}로의 여행을 계획하고 있습니다. 여행 시작일자는 ${StartDate}이고, 종료일자는 ${EndDate}입니다. 주로 이용하는 교통수단은 ${Transportation}이고, 동행인은 ${Companions}명입니다. 여행목적은 ${Purpose}입니다.`,
+      content: `저는 ${Place}로의 여행을 계획하고 있습니다. 여행 시작일자는 ${StartDate}이고, 종료일자는 ${EndDate}입니다. 주로 이용하는 교통수단은 ${Transportation}이고, 동행인은 ${Companions}명입니다. 여행목적은 ${Purpose}입니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 저는 현지 문화체험에 대해 ${Town}합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
     },
     {
       role: "assistant",
@@ -183,6 +190,10 @@ app.post("/travelGuide", async function (req, res) {
     Purpose,
     travel,
     Place,
+    Act_rest,
+    Town,
+    Memory,
+    Plan,
   });
   res.json({ assistant: travel });
 });
@@ -201,5 +212,8 @@ app.get("/travelLogs", async function (req, res) {
     res.status(500).send("Error getting documents");
   }
 });
+
+
+//module.exports.handler = serverless(app);
 
 app.listen(3000);
