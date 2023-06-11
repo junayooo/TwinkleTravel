@@ -1,8 +1,7 @@
 const chatBox = document.querySelector(".chat-box");
 let userMessages = [];
 let assistantMessages = [];
-let StartDate = "";
-let EndDate = "";
+let dates = "";
 let Transportation = "";
 let Companions = "";
 let Purpose = "";
@@ -17,10 +16,12 @@ function spinner() {
   document.getElementById("loader").style.display = "block";
 }
 
+$(document).ready(function() {
+  $('input[name="dates"]').daterangepicker();
+});
 
 async function start() {
-  const startDate = document.getElementById("startDate").value;
-  const endDate = document.getElementById("endDate").value;
+  const dates = document.getElementById("dates").value;
   const transportation = document.getElementById("transportation").value;
   const companions = document.getElementById("companions").value;
   const purpose = document.getElementById("purpose").value;
@@ -30,16 +31,12 @@ async function start() {
   const memory=document.getElementById("memory").value;
   const plan=document.getElementById("plan").value;
  
-  if (startDate === "") {
-    alert("시작일을 입력해주세요.");
+  if (dates === "") {
+    alert("여행기간을 입력해주세요.");
     return;
   }
-  StartDate = startDate;
-  if (endDate === "") {
-    alert("종료일을 입력해주세요.");
-    return;
-  }
-  EndDate = endDate;
+
+  dates = dates;
 
   Transportation = transportation;
   Companions = companions;
@@ -50,7 +47,7 @@ async function start() {
   Town=town;
   Memory=memory;
   Plan=plan;
-  
+
     //검색어 배열
   searchTexts = [
     "자연경관 관광지",
@@ -99,8 +96,7 @@ const sendMessage = async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      StartDate: StartDate,
-      EndDate: EndDate,
+      dates: dates,
       Transportation: Transportation,
       Companions: Companions,
       Purpose: Purpose,
@@ -142,7 +138,7 @@ function fetchTravelLogs() {
       data.forEach((item) => {
         const li = document.createElement("li");
         const text = document.createTextNode(
-          `${item.StartDate} - ${item.EndDate}: ${item.travel}`
+          `${item.dates}: ${item.travel}`
         );
         li.appendChild(text);
         travelList.appendChild(li);
@@ -154,6 +150,7 @@ function fetchTravelLogs() {
 }
 
 fetchTravelLogs();
+
 
 //회원가입 창 나타나게 하기
 

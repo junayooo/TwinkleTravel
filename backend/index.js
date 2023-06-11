@@ -118,8 +118,7 @@ app.post("/map", async function (req, res) {
 // POST method route
 app.post("/travelGuide", async function (req, res) {
   const {
-    StartDate,
-    EndDate,
+    dates,
     Transportation,
     Companions,
     Purpose,
@@ -151,11 +150,11 @@ app.post("/travelGuide", async function (req, res) {
     },
     {
       role: "user",
-      content: `저는 ${Place}로의 여행을 계획하고 있습니다. 여행 시작일자는 ${StartDate}이고, 종료일자는 ${EndDate}입니다. 주로 이용하는 교통수단은 ${Transportation}이고, 동행인은 ${Companions}명입니다. 여행목적은 ${Purpose}입니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 저는 현지 문화체험에 대해 ${Town}합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
+      content: `저는 ${Place}로의 여행을 계획하고 있습니다. 여행 일자는 ${dates}입니다. 주로 이용하는 교통수단은 ${Transportation}이고, 동행인은 ${Companions}명입니다. 여행목적은 ${Purpose}입니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 저는 현지 문화체험에 대해 ${Town}합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
     },
     {
       role: "assistant",
-      content: `당신이 ${Place}로의 여행을 계획하고 있으며 여행 시작일자가 ${StartDate},종료일자는 ${EndDate}인 것을 확인하였습니다. 또한,교통수단은 ${Transportation}이고, 동행인은 ${Companions}명이며, 여행목적은 ${Purpose}인것을 확인하였습니다. ${Place}의 가볼만한 곳 목록 ${obtainedPlace}을 사용해 당신의 여행 계획을 세워드리겠습니다!`,
+      content: `당신이 ${Place}로의 여행을 계획하고 있으며 여행 일자가 ${dates}인 것을 확인하였습니다. 또한,교통수단은 ${Transportation}이고, 동행인은 ${Companions}명이며, 여행목적은 ${Purpose}인것을 확인하였습니다. ${Place}의 가볼만한 곳 목록 ${obtainedPlace}을 사용해 당신의 여행 계획을 세워드리겠습니다!`,
     },
   ];
 
@@ -183,8 +182,7 @@ app.post("/travelGuide", async function (req, res) {
 
   // 파이어베이스 데이터베이스에 저장
   await db.collection("travelLogs").add({
-    StartDate,
-    EndDate,
+    dates,
     Transportation,
     Companions,
     Purpose,
