@@ -12,7 +12,7 @@ let Town="";
 let Memory="";
 let Plan="";
 let obtainedPlace = [];
-let types = [];
+let searchTexts = [];
 function spinner() {
   document.getElementById("loader").style.display = "block";
 }
@@ -45,24 +45,20 @@ async function start() {
   Companions = companions;
   Purpose = purpose;
   Place = place;
+
   Act_rest=act_rest;
   Town=town;
   Memory=memory;
   Plan=plan;
-  types = [
-    "amusement_park", 
-    "aquarium", 
-    "art_gallery",
-    "museum",
-    "shopping_mall",
-    "tourist_attraction",
-    "landmark",
-    "zoo",
-    "park",
+  
+    //검색어 배열
+  searchTexts = [
+    "자연경관 관광지",
+    "시장",
+    "식당",
+    "카페",
     "bar",
-    "cafe",
-    "restaurant",
-    "lodging"
+    "게스트 하우스"
   ];
   document.getElementById("intro").style.display = "none";
   document.getElementById("chat").style.display = "block";
@@ -74,7 +70,7 @@ async function start() {
     },
     body: JSON.stringify({
       Place: Place,
-      types: types,
+      searchTexts: searchTexts,
     }),
   });
 

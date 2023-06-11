@@ -38,7 +38,7 @@ const apiKey = process.env.MAPS_API_KEY;
 
 app.post("/map", async function (req, res) {
   try {
-    const { Place, types } = req.body;
+    const { Place, searchTexts } = req.body;
     const encodedAddress = encodeURI(Place);
     const geocodeResponse = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
@@ -48,26 +48,28 @@ app.post("/map", async function (req, res) {
     if (results.length > 0 && results[0].geometry) {
       const { lat, lng } = results[0].geometry.location;
       const latLng = `${lat},${lng}`;
-      const radius = 10000; // 검색 반경 (미터)
-      // const type = "tourist_attraction"; // 검색할 장소 유형
+      const radius = 100000; // 검색 반경 (미터)
       const obtainedPlaces = {};
 
-      for (const type of types) {
-        const placesResponse = await google.placesNearby({
-          params: {
-            location: latLng,
-            radius: radius,
-            type: type,
-            key: apiKey,
-          },
-        });
+      for (const searchText of searchTexts) {
+        const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(
+          searchText
+        )}&location=${latLng}&radius=${radius}&key=${apiKey}`;
 
-        const places = placesResponse.data.results.map(
-          (Place) => Place.name
-        );
-        obtainedPlaces[type] = places;
+        await axios
+          .get(url)
+          .then((response) => {
+            const results = response.data.results;
+            for (let i = 0; i < results.length; i++) {
+              const place = results.map((Place) => Place.name);
+              obtainedPlaces[searchText] = place;
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       }
-      console.log(obtainedPlaces);
+      console.log(obtainedPlaces)
       res.json(obtainedPlaces);
     } else {
       res.status(500).send({ error: "Error occurred while searching places." });
@@ -80,7 +82,38 @@ app.post("/map", async function (req, res) {
   }
 });
 
+// app.get("/test", async function (req, res) {
+//   const Place = "서울";
+//   const encodedAddress = encodeURI(Place);
+//   const searchText = "카페";
+//   const geocodeResponse = await axios.get(
+//     `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
+//   );
+//   const results = geocodeResponse.data.results;
 
+//   if (results.length > 0 && results[0].geometry) {
+//     const { lat, lng } = results[0].geometry.location;
+//     const centerLocation = `${lat},${lng}`;
+//     const radius = 100000; // 검색 반경 (미터)
+
+//     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(
+//       searchText
+//     )}&location=${centerLocation}&radius=${radius}&key=${apiKey}`;
+
+//     axios
+//       .get(url)
+//       .then((response) => {
+//         const results = response.data.results;
+//         for (let i = 0; i < results.length; i++) {
+//           const place = results[i];
+//           console.log(place.name);
+//         }
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   }
+// });
 
 // POST method route
 app.post("/travelGuide", async function (req, res) {
