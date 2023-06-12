@@ -1,13 +1,11 @@
 const chatBox = document.querySelector(".chat-box");
 let userMessages = [];
 let assistantMessages = [];
-let dates = "";
-let Transportation = "";
-let Companions = "";
+let Dates = "";
 let Purpose = "";
 let Place = "";
 let Act_rest="";
-let Town="";
+let Money=0;
 let Memory="";
 let Plan="";
 let obtainedPlace = [];
@@ -22,12 +20,10 @@ $(document).ready(function() {
 
 async function start() {
   const dates = document.getElementById("dates").value;
-  const transportation = document.getElementById("transportation").value;
-  const companions = document.getElementById("companions").value;
-  const purpose = document.getElementById("purpose").value;
+  const purpose = document.querySelector('input[name="image"]:checked').value;
   const place = document.getElementById("place").value;
   const act_rest=document.getElementById("act_rest").value;
-  const town=document.getElementById("town").value;
+  const money=document.querySelector('input[name="money"]:checked').value;
   const memory=document.getElementById("memory").value;
   const plan=document.getElementById("plan").value;
  
@@ -36,15 +32,11 @@ async function start() {
     return;
   }
 
-  dates = dates;
-
-  Transportation = transportation;
-  Companions = companions;
+  Dates = dates;
   Purpose = purpose;
   Place = place;
-
   Act_rest=act_rest;
-  Town=town;
+  Money = money;
   Memory=memory;
   Plan=plan;
 
@@ -55,7 +47,7 @@ async function start() {
     "식당",
     "카페",
     "bar",
-    "게스트 하우스"
+    "숙소"
   ];
   document.getElementById("intro").style.display = "none";
   document.getElementById("chat").style.display = "block";
@@ -96,14 +88,12 @@ const sendMessage = async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      dates: dates,
-      Transportation: Transportation,
-      Companions: Companions,
+      Dates: Dates,
       Purpose: Purpose,
       Place: Place,
       Act_rest:Act_rest,
-      Town:Town,
-      Memory:Memory,
+      Money: Money,
+      Memory: Memory,
       Plan:Plan,
 
       userMessages: userMessages,

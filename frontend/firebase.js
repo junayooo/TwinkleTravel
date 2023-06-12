@@ -41,8 +41,7 @@ document.getElementById("signUpButton").addEventListener("click", (event) => {
   createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword)
     .then((userCredential) => {
       console.log(userCredential);
-      // Signed in
-      const user = userCredential.user;
+      // Signed up
       showAlert("회원가입완료!");
       document.getElementById("login").style.display = "block";
       document.getElementById("sign").style.display = "none";
