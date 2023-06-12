@@ -93,7 +93,7 @@ app.post("/travelGuide", async function (req, res) {
     userMessages,
     assistantMessages,
   } = req.body;
-// console.log(ObtainedPlaces);
+
   const messages = [
     {
       role: "system",
@@ -112,11 +112,11 @@ app.post("/travelGuide", async function (req, res) {
     },
     {
       role: "user",
-      content: `" ${ObtainedPlaces}" 이 목록에 있는 장소들만 넣어서 ${Place}여행계획을 세워주세요.  여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
+      content: `" ${Place}여행계획을 세워주세요.  여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
     },
     {
       role: "assistant",
-      content: ` "${ObtainedPlaces}" 이 목록에 있는 장소들만 넣어서 ${Place}에서의 여행계획을 세워드리겠습니다.`,
+      content: ` ${Place}에서의 여행계획을 세워드리겠습니다.`,
     },
   ];
 

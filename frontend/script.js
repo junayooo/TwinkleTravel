@@ -64,9 +64,7 @@ async function start() {
   });
 
   const obtainedPlaces = await placeRequest.json();
-
   ObtainedPlaces=obtainedPlaces;
- 
 }
 
 const sendMessage = async () => {
@@ -96,12 +94,12 @@ const sendMessage = async () => {
       Money: Money,
       Memory: Memory,
       Plan:Plan,
-      ObtainedPlaces,
+      ObtainedPlaces: ObtainedPlaces,
       userMessages: userMessages,
       assistantMessages: assistantMessages,
     }),
   });
-  
+ 
   const data = await response.json();
   document.getElementById("loader").style.display = "none";
 
