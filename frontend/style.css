@@ -75,9 +75,8 @@ body {
 }
 
 .intro-container img {
-  width: 50%;
-  min-width: 300px;
-  margin-bottom: 20px;
+  width: 60px;
+  
 }
 
 .intro-container label {
@@ -412,4 +411,12 @@ border-radius: 20px;}
 
 form {
   background-color: #fff7b8;
+}
+image1 {
+width: 10px;
+}
+
+.intro-container img {
+  margin-right: 1px;
+  
 }

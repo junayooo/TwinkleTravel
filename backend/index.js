@@ -11,7 +11,7 @@ const axios = require("axios");
 
 require("dotenv").config();
 
-const serverless = require('serverless-http');
+const serverless = require("serverless-http");
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -60,17 +60,13 @@ app.post("/map", async function (req, res) {
           .get(url)
           .then((response) => {
             const results = response.data.results;
-            for (let i = 0; i < results.length; i++) {
-
-              const place = results.map((Place) => Place.name);
-              obtainedPlaces[searchText] = place;
-            }
+            const places = results.map((Place) => Place.name);
+            obtainedPlaces[searchText] = places;
           })
           .catch((error) => {
             console.error(error);
           });
       }
-      console.log(obtainedPlaces);
       res.json(obtainedPlaces);
     } else {
       res.status(500).send({ error: "Error occurred while searching places." });
@@ -93,11 +89,11 @@ app.post("/travelGuide", async function (req, res) {
     Money,
     Memory,
     Plan,
+    ObtainedPlaces,
     userMessages,
     assistantMessages,
-    obtainedPlace,
   } = req.body;
-
+// console.log(ObtainedPlaces);
   const messages = [
     {
       role: "system",
@@ -107,7 +103,7 @@ app.post("/travelGuide", async function (req, res) {
     {
       role: "user",
       content:
-      "당신은 세계 최고의 여행 계획을 짜주는 여행 플래너입니다. 당신의 이름은 트윙클 입니다. 이용자에게 입력받은 여러가지 여행에 관련된 취향 정보를 고려해 주어진 장소를 이용한 여행계획을 세워주는 것이 당신의 일입니다.",
+        "당신은 세계 최고의 여행 계획을 짜주는 여행 플래너입니다. 당신의 이름은 트윙클 입니다. 이용자에게 입력받은 여러가지 여행에 관련된 취향 정보를 고려해 주어진 장소를 이용한 여행계획을 세워주는 것이 당신의 일입니다.",
     },
     {
       role: "assistant",
@@ -116,11 +112,11 @@ app.post("/travelGuide", async function (req, res) {
     },
     {
       role: "user",
-      content: `이 여행지 목록을 가지고 ${Place}여행계획을 세워주세요. \n ${obtainedPlace} \n 여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
+      content: `" ${ObtainedPlaces}" 이 목록에 있는 장소들만 넣어서 ${Place}여행계획을 세워주세요.  여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
     },
     {
       role: "assistant",
-      content: `이 여행지 목록을 사용해서 ${Place}에서의 여행계획을 세워드리겠습니다.`,
+      content: ` "${ObtainedPlaces}" 이 목록에 있는 장소들만 넣어서 ${Place}에서의 여행계획을 세워드리겠습니다.`,
     },
   ];
 
@@ -174,7 +170,6 @@ app.get("/travelLogs", async function (req, res) {
     res.status(500).send("Error getting documents");
   }
 });
-
 
 //module.exports.handler = serverless(app);
 
