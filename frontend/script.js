@@ -8,7 +8,7 @@ let Act_rest="";
 let Money=0;
 let Memory="";
 let Plan="";
-let obtainedPlace = [];
+let ObtainedPlaces = {};
 let searchTexts = [];
 function spinner() {
   document.getElementById("loader").style.display = "block";
@@ -63,7 +63,8 @@ async function start() {
     }),
   });
 
-  obtainedPlace = await placeRequest.json();
+  const obtainedPlaces = await placeRequest.json();
+  ObtainedPlaces=obtainedPlaces;
 }
 
 const sendMessage = async () => {
@@ -80,8 +81,6 @@ const sendMessage = async () => {
 
   chatInput.value = "";
 
-
-
   const response = await fetch("http://localhost:3000/travelGuide", {
     method: "POST",
     headers: {
@@ -95,13 +94,12 @@ const sendMessage = async () => {
       Money: Money,
       Memory: Memory,
       Plan:Plan,
-
+      ObtainedPlaces: ObtainedPlaces,
       userMessages: userMessages,
       assistantMessages: assistantMessages,
-      obtainedPlace : obtainedPlace
     }),
   });
-
+ 
   const data = await response.json();
   document.getElementById("loader").style.display = "none";
 
