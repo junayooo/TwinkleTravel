@@ -32,7 +32,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 const db = admin.firestore();
-
+const obtainedPlaces = {};
 // googlemaps API
 const apiKey = process.env.MAPS_API_KEY;
 
@@ -49,7 +49,7 @@ app.post("/map", async function (req, res) {
       const { lat, lng } = results[0].geometry.location;
       const latLng = `${lat},${lng}`;
       const radius = 100000; // 검색 반경 (미터)
-      const obtainedPlaces = {};
+      
 
       for (const searchText of searchTexts) {
         const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(
@@ -89,7 +89,7 @@ app.post("/travelGuide", async function (req, res) {
     Money,
     Memory,
     Plan,
-    ObtainedPlaces,
+    // ObtainedPlaces,
     userMessages,
     assistantMessages,
   } = req.body;
@@ -112,14 +112,14 @@ app.post("/travelGuide", async function (req, res) {
     },
     {
       role: "user",
-      content: `" ${Place}여행계획을 세워주세요.  여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다.`,
+      content: `${Place}여행계획을 세워주세요.  여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다. 여행지 목록은 json 문자열로, "장소 유형" : [장소이름들] 을 모아놓은 데이터입니다. 여행지 목록 = ${obtainedPlaces}`,
     },
     {
       role: "assistant",
       content: ` ${Place}에서의 여행계획을 세워드리겠습니다.`,
     },
   ];
-
+console.log(obtainedPlaces);
   while (userMessages.length !== 0 || assistantMessages.length !== 0) {
     if (userMessages.length !== 0) {
       messages.push({

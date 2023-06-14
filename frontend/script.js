@@ -8,7 +8,7 @@ let Act_rest="";
 let Money=0;
 let Memory="";
 let Plan="";
-let ObtainedPlaces = {};
+// let ObtainedPlaces = {};
 let searchTexts = [];
 function spinner() {
   document.getElementById("loader").style.display = "block";
@@ -64,7 +64,7 @@ async function start() {
   });
 
   const obtainedPlaces = await placeRequest.json();
-  ObtainedPlaces=obtainedPlaces;
+  // ObtainedPlaces=obtainedPlaces;
 }
 
 const sendMessage = async () => {
@@ -94,7 +94,7 @@ const sendMessage = async () => {
       Money: Money,
       Memory: Memory,
       Plan:Plan,
-      ObtainedPlaces: ObtainedPlaces,
+      // ObtainedPlaces: ObtainedPlaces,
       userMessages: userMessages,
       assistantMessages: assistantMessages,
     }),
