@@ -20,11 +20,12 @@ const openai = new OpenAIApi(configuration);
 
 // https://mbtrip.du.r.appspot.com
 // CORS 이슈 해결
-// let corsOptions = {
-//     origin: 'https://a77893bb.twinkle.pages.dev/',
-//     credentials: true
-// }
+let corsOptions = {
+    origin: '*',
+    credentials: true,
+}
 
+app.use(cors(corsOptions))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -39,7 +40,7 @@ const apiKey = process.env.MAPS_API_KEY;
 
 app.post("/map", async function (req, res) {
   try {
-    res.header('Access-Control-Allow-Origin', '*');
+    
     const { Place, Types, Money } = req.body;
     const encodedAddress = encodeURI(Place);
     const geocodeResponse = await axios.get(
@@ -85,7 +86,7 @@ app.post("/map", async function (req, res) {
 
 // POST method route
 app.post("/travelGuide", async function (req, res) {
-  res.header('Access-Control-Allow-Origin', '*');
+  
   const {
     Dates,
     Purpose,
@@ -164,7 +165,7 @@ app.post("/travelGuide", async function (req, res) {
 // 파이어스토어에서 데이터를 가져와 HTML로 표시하는 엔드포인트 추가
 app.get("/travelLogs", async function (req, res) {
   try {
-    res.header('Access-Control-Allow-Origin', '*');
+    
     const querySnapshot = await db.collection("travelLogs").get();
     const data = [];
     querySnapshot.forEach((doc) => {
