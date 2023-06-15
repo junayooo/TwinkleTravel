@@ -4,17 +4,19 @@ let assistantMessages = [];
 let Dates = "";
 let Purpose = "";
 let Place = "";
-let Act_rest="";
-let Money=0;
-let Memory="";
-let Plan="";
-// let ObtainedPlaces = {};
-let searchTexts = [];
+let Act_rest = "";
+let Money = 0;
+let Memory = "";
+let Plan = "";
+//nearbyplace
+let Types = [];
+//textsearch
+// let searchTexts = [];
 function spinner() {
   document.getElementById("loader").style.display = "block";
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   $('input[name="dates"]').daterangepicker();
 });
 
@@ -22,11 +24,11 @@ async function start() {
   const dates = document.getElementById("dates").value;
   const purpose = document.querySelector('input[name="image"]:checked').value;
   const place = document.getElementById("place").value;
-  const act_rest=document.getElementById("act_rest").value;
-  const money=document.querySelector('input[name="money"]:checked').value;
-  const memory=document.getElementById("memory").value;
-  const plan=document.getElementById("plan").value;
- 
+  const act_rest = document.getElementById("act_rest").value;
+  const money = document.querySelector('input[name="money"]:checked').value;
+  const memory = document.getElementById("memory").value;
+  const plan = document.getElementById("plan").value;
+
   if (dates === "") {
     alert("여행기간을 입력해주세요.");
     return;
@@ -35,20 +37,29 @@ async function start() {
   Dates = dates;
   Purpose = purpose;
   Place = place;
-  Act_rest=act_rest;
+  Act_rest = act_rest;
   Money = money;
-  Memory=memory;
-  Plan=plan;
+  Memory = memory;
+  Plan = plan;
 
-    //검색어 배열
-  searchTexts = [
-    "자연경관 관광지",
-    "시장",
-    "식당",
-    "카페",
+  //장소유형
+  Types = [
+    "amusement_park",
+    "aquarium",
+    "art_gallery",
+    "museum",
+    "shopping_mall",
+    "tourist_attraction",
+    "landmark",
+    "zoo",
+    "park",
     "bar",
-    "숙소"
+    "cafe",
+    "restaurant",
+    "lodging",
   ];
+  //검색어 배열
+  // searchTexts = ["자연경관 관광지", "restaurant", "cafe", "bar", "숙소"];
   document.getElementById("intro").style.display = "none";
   document.getElementById("chat").style.display = "block";
 
@@ -59,7 +70,9 @@ async function start() {
     },
     body: JSON.stringify({
       Place: Place,
-      searchTexts: searchTexts,
+      Types: Types,
+      Money: Money,
+      // searchTexts: searchTexts,
     }),
   });
 
@@ -75,7 +88,7 @@ const sendMessage = async () => {
      <p>${chatInput.value}</p>
    `;
   chatBox.appendChild(chatMessage);
-  
+
   //userMessage 메세지 추가
   userMessages.push(chatInput.value);
 
@@ -90,16 +103,16 @@ const sendMessage = async () => {
       Dates: Dates,
       Purpose: Purpose,
       Place: Place,
-      Act_rest:Act_rest,
+      Act_rest: Act_rest,
       Money: Money,
       Memory: Memory,
-      Plan:Plan,
+      Plan: Plan,
       // ObtainedPlaces: ObtainedPlaces,
       userMessages: userMessages,
       assistantMessages: assistantMessages,
     }),
   });
- 
+
   const data = await response.json();
   document.getElementById("loader").style.display = "none";
 
@@ -125,9 +138,7 @@ function fetchTravelLogs() {
       const travelList = document.getElementById("travelList");
       data.forEach((item) => {
         const li = document.createElement("li");
-        const text = document.createTextNode(
-          `${item.dates}: ${item.travel}`
-        );
+        const text = document.createTextNode(`${item.dates}: ${item.travel}`);
         li.appendChild(text);
         travelList.appendChild(li);
       });
@@ -138,7 +149,6 @@ function fetchTravelLogs() {
 }
 
 fetchTravelLogs();
-
 
 //회원가입 창 나타나게 하기
 

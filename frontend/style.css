@@ -8,6 +8,7 @@ background-color: #fff;
 
 nav img{
   width: 70px;
+  margin-right: 50px;
 }
 .chat-container {
   max-width: 500px;
@@ -20,8 +21,8 @@ nav img{
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;
-  overflow: auto;
-  height: 300px;
+  min-height: 300px;
+
 }
 
 .chat-message {
@@ -186,13 +187,13 @@ nav img{
 .container {
   display: flex;
   align-items: center;
-  height: 100vh;
+
   flex-direction: column;
 }
 
 /* 폼 스타일 */
 form {
-  width: 400px;
+  width: 400rem;
   padding: 40px;
   background-color: #fff;
   border-radius: 8px;
@@ -271,7 +272,6 @@ button:hover {
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100vh;
   margin: 0;
   padding: 0;
