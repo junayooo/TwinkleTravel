@@ -1,11 +1,15 @@
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+nav {
+  display: flex;
+background-color: #fff;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
 }
 
+nav img{
+  width: 70px;
+  margin-right: 50px;
+}
 .chat-container {
   max-width: 500px;
   margin: 0 auto;
@@ -17,8 +21,8 @@ body {
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;
-  overflow-y: scroll;
-  height: 300px;
+  min-height: 300px;
+
 }
 
 .chat-message {
@@ -68,15 +72,17 @@ body {
 .intro-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
   text-align: center;
-  padding: 20px;
+  padding: 30px;
+  width: 80%;
+  background-color: #fff7b8;
+  border-radius: 30px;
 }
 
 .intro-container img {
   width: 60px;
-  
 }
 
 .intro-container label {
@@ -137,18 +143,6 @@ body {
   color: #007bff;
 }
 
-.intro-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-}
-
-.intro-heading {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
 
 .form-container {
   max-width: 400px;
@@ -192,25 +186,18 @@ body {
 
 .container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+
+  flex-direction: column;
 }
 
 /* 폼 스타일 */
 form {
-  width: 400px;
+  width: 400rem;
   padding: 40px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
 }
 
 div {
@@ -235,7 +222,7 @@ button {
   display: block;
   width: 100%;
   padding: 10px;
-  margin-top: 20px;
+  margin: 10px;
   background-color: #4caf50;
   color: #fff;
   border: none;
@@ -281,20 +268,22 @@ button:hover {
   background-color: #e3c902;
 }
 
-
-
-
 /* 가운데 정렬을 위한 스타일 */
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
 }
 
 /* h1 스타일 */
 .intro-heading {
   text-align: center;
+  font-size: 26px;
+
 }
 
 /* 폼 스타일 */
@@ -307,7 +296,10 @@ form {
 
 h1 {
   text-align: center;
-  margin-right: 50px;
+  margin: 10px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
 }
 
 div {
@@ -325,9 +317,10 @@ input[type="password"] {
 button[type="submit"],
 button[type="button"] {
   width: 100%;
+  min-width: 70px;
   padding: 8px;
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: #ffe100;
   color: white;
   cursor: pointer;
@@ -338,33 +331,14 @@ button[type="button"]:hover {
   background-color: #e3c902;
 }
 
-/* 반응형 스타일 */
-@media screen and (max-width: 600px) {
-  form {
-    width: 90%;
-  }
-  .container {
-    flex-direction: column;
-  }
-}
 
 img {
-  margin-right: 50px;
+  margin: 10px;
 }
 
 #login {
   background-color: #fff7b8;
 }
-
-.intro-container {
-  
-    width: 60%;
-    padding: 20px;
-    background-color: #fff7b8;;
-    border-radius: 40px;
-  
-}
-
 
 .intro-container button {
   background-color: #ffe100;
@@ -372,7 +346,6 @@ img {
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
-  
 }
 
 .intro-container button[type="button"] :hover {
@@ -381,12 +354,12 @@ img {
 
 .chat-container {
   width: 400px;
-    padding: 20px;
-    background-color: #fff7b8;;
-    border-radius: 20px;
+  padding: 20px;
+  background-color: #fff7b8;
+  border-radius: 20px;
 }
 
-.chat-box  {
+.chat-box {
   background-color: #fffce3;
 }
 .chat-input input {
@@ -396,27 +369,25 @@ img {
 
 .chat-input button {
   background-color: #ffe100;
-border-radius: 20px;}
+  border-radius: 20px;
+}
 
 .chat-input button[type="button"] :hover {
   background-color: #e3c902;
 }
 
-
 .assistant {
   color: white;
   background-color: #f5de33;
-
 }
 
 form {
   background-color: #fff7b8;
 }
 image1 {
-width: 10px;
+  width: 10px;
 }
 
 .intro-container img {
-  margin-right: 1px;
-  
+  margin: 1px;
 }

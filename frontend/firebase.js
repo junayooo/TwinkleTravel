@@ -4,6 +4,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
 
@@ -76,19 +77,35 @@ document.getElementById("signInButton").addEventListener("click", (event) => {
 });
 
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   const userToken = localStorage.getItem("userToken");
-//   if (userToken) {
-//     // 토큰이 있는 경우, 사용자가 이미 로그인된 것으로 간주합니다.
-//     // 로그인 상태를 유지하고 원하는 동작을 수행합니다.
-//     document.getElementById("intro").style.display = "block";
-//     document.getElementById("sign").style.display = "none";
-//     document.getElementById("login").style.display = "none";
-//   } else {
-//     // 토큰이 없는 경우, 사용자는 로그인되지 않은 상태입니다.
-//     // 로그인 화면을 표시합니다.
-//     document.getElementById("intro").style.display = "none";
-//     document.getElementById("sign").style.display = "none";
-//     document.getElementById("login").style.display = "block";
-//   }
-// });
+document.addEventListener("DOMContentLoaded", () => {
+  const userToken = localStorage.getItem("userToken");
+  if (userToken) {
+    // 토큰이 있는 경우, 사용자가 이미 로그인된 것으로 간주합니다.
+    // 로그인 상태를 유지하고 원하는 동작을 수행합니다.
+    document.getElementById("intro").style.display = "block";
+    document.getElementById("sign").style.display = "none";
+    document.getElementById("login").style.display = "none";
+  } else {
+    // 토큰이 없는 경우, 사용자는 로그인되지 않은 상태입니다.
+    // 로그인 화면을 표시합니다.
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("sign").style.display = "none";
+    document.getElementById("login").style.display = "block";
+  }
+});
+
+//로그아웃
+const logoutButton = document.getElementById('logoutButton');
+logoutButton.addEventListener('click', logout);
+
+function logout() {
+  signOut(auth).then(function() {
+    // 로그아웃 성공
+    localStorage.removeItem("userToken");
+    location.reload();
+    console.log('로그아웃되었습니다.');
+  }).catch(function(error) {
+    // 로그아웃 실패
+    console.log('로그아웃 중 오류가 발생했습니다.', error);
+  });
+}
