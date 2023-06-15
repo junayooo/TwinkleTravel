@@ -12,6 +12,9 @@ let Plan = "";
 let Types = [];
 //textsearch
 // let searchTexts = [];
+
+app.use(cors(corsOptions))
+
 function spinner() {
   document.getElementById("loader").style.display = "block";
 }
@@ -63,7 +66,7 @@ async function start() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("chat").style.display = "block";
 
-  const placeRequest = await fetch("http:localhost:3000/map", {
+  const placeRequest =  await fetch("http://localhost:3000/map", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -75,6 +78,7 @@ async function start() {
       // searchTexts: searchTexts,
     }),
   });
+
 
   const obtainedPlaces = await placeRequest.json();
   // ObtainedPlaces=obtainedPlaces;
@@ -94,7 +98,7 @@ const sendMessage = async () => {
 
   chatInput.value = "";
 
-  const response = await fetch("http:localhost:3000/travelGuide", {
+  const response = await fetch("https://port-0-twinkletravel-7xwyjq992llixmegsp.sel4.cloudtype.app/travelGuide", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -132,7 +136,7 @@ document
   .addEventListener("click", sendMessage);
 
 function fetchTravelLogs() {
-  fetch("http:localhost:3000/travelLogs")
+  fetch("https://port-0-twinkletravel-7xwyjq992llixmegsp.sel4.cloudtype.app/travelLogs")
     .then((response) => response.json())
     .then((data) => {
       const travelList = document.getElementById("travelList");

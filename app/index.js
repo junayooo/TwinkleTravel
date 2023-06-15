@@ -21,11 +21,11 @@ const openai = new OpenAIApi(configuration);
 // https://mbtrip.du.r.appspot.com
 // CORS 이슈 해결
 let corsOptions = {
-    origin: '*',
-    credentials: true,
-}
+  origin: "*",
+  credentials: true,
+};
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,7 +40,6 @@ const apiKey = process.env.MAPS_API_KEY;
 
 app.post("/map", async function (req, res) {
   try {
-    
     const { Place, Types, Money } = req.body;
     const encodedAddress = encodeURI(Place);
     const geocodeResponse = await axios.get(
@@ -74,7 +73,9 @@ app.post("/map", async function (req, res) {
       console.log(Money);
       res.json(obtainedPlaces);
     } else {
+      console.log(error);
       res.status(500).send({ error: "Error occurred while searching places." });
+
       return; // 오류 발생 시 함수를 종료합니다.
     }
   } catch (error) {
@@ -86,7 +87,6 @@ app.post("/map", async function (req, res) {
 
 // POST method route
 app.post("/travelGuide", async function (req, res) {
-  
   const {
     Dates,
     Purpose,
@@ -126,7 +126,7 @@ app.post("/travelGuide", async function (req, res) {
     // },
   ];
   console.log(obtainedPlaces);
-  while (userMessages.length !== 0 || assistantMessages.length !== 0) { 
+  while (userMessages.length !== 0 || assistantMessages.length !== 0) {
     if (userMessages.length !== 0) {
       messages.push({
         role: "user",
@@ -165,7 +165,6 @@ app.post("/travelGuide", async function (req, res) {
 // 파이어스토어에서 데이터를 가져와 HTML로 표시하는 엔드포인트 추가
 app.get("/travelLogs", async function (req, res) {
   try {
-    
     const querySnapshot = await db.collection("travelLogs").get();
     const data = [];
     querySnapshot.forEach((doc) => {
@@ -178,12 +177,14 @@ app.get("/travelLogs", async function (req, res) {
   }
 });
 
-
 app.get("/test", function (req, res) {
-   console.log("test");
+  try {
+    console.log("test");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(3000);
-
 
 //module.exports.handler = serverless(app);
