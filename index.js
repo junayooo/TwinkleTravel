@@ -18,9 +18,10 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-//CORS 이슈 해결
+// https://mbtrip.du.r.appspot.com
+// CORS 이슈 해결
 // let corsOptions = {
-//     origin: 'https://twinkletravel.pages.dev',
+//     origin: 'https://a77893bb.twinkle.pages.dev/',
 //     credentials: true
 // }
 app.use(cors());
@@ -173,109 +174,12 @@ app.get("/travelLogs", async function (req, res) {
   }
 });
 
-app.get("/testmap", async function (req, res) {
-// try {
-//   const Place = "서울";
-//   const Types = [
-//     // "amusement_park",
-//     // "aquarium",
-//     // "art_gallery",
-//     // "museum",
-//     // "shopping_mall",
-//     // "tourist_attraction",
-//     // "landmark",
-//     // "zoo",
-//     // "park",
-//     // "bar",
-//     "cafe",
-//     "restaurant",
-//     // "lodging",
-//   ];
-//   const Money = 2;
-//   const encodedAddress = encodeURI(Place);
-//   const geocodeResponse = await axios.get(
-//     `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
-//   );
-//   const results = geocodeResponse.data.results;
 
-//   if (results.length > 0 && results[0].geometry) {
-//     const { lat, lng } = results[0].geometry.location;
-//     const latLng = `${lat},${lng}`;
-//     const radius = 1000000; // 검색 반경 (미터)
-
-//     for (const type of Types) {
-//       const placesResponse = await google.placesNearby({
-//         params: {
-//           location: latLng,
-//           radius: radius,
-//           type: type,
-//           rankBy: "PROMINENCE",
-//           maxPriceLevel: Money,
-//           // keyword
-//           language: "ko",
-//           key: apiKey,
-//         },
-//       });
-//       console.log(placesResponse.data.results);
-
-//       const places = placesResponse.data.results.map((Place) => Place.name);
-//       obtainedPlaces[type] = places;
-//     }
-
-//     res.json(obtainedPlaces);
-//   } else {
-//     res.status(500).send({ error: "Error occurred while searching places." });
-//     return; // 오류 발생 시 함수를 종료합니다.
-//   }
-// } catch (error) {
-//   console.log(error);
-//   res.status(500).send({ error: "Error occurred while searching places." });
-//   return; // 오류 발생 시 함수를 종료합니다.
-// }
+app.get("/test", function (req, res) {
+   console.log("test");
 });
 
-// app.post("/map", async function (req, res) {
-//   try {
-//     const { Place, searchTexts, Money } = req.body;
-//     const encodedAddress = encodeURI(Place);
-//     const geocodeResponse = await axios.get(
-//       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
-//     );
-//     const results = geocodeResponse.data.results;
+app.listen(3000);
 
-//     if (results.length > 0 && results[0].geometry) {
-//       const { lat, lng } = results[0].geometry.location;
-//       const latLng = `${lat},${lng}`;
-//       const radius = 100000; // 검색 반경 (미터)
-//       const obtainedPlaces = {};
-
-//       for (const searchText of searchTexts) {
-//         const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(
-//           searchText
-//         )}&location=${latLng}&radius=${radius}&key=${apiKey}`;
-
-//         await axios
-//           .get(url)
-//           .then((response) => {
-//             const results = response.data.results;
-//             const places = results.map((Place) => Place.name);
-//             obtainedPlaces[searchText] = places;
-//           })
-//           .catch((error) => {
-//             console.error(error);
-//           });
-//       }
-//       res.json(obtainedPlaces);
-//     } else {
-//       res.status(500).send({ error: "Error occurred while searching places." });
-//       return; // 오류 발생 시 함수를 종료합니다.
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({ error: "Error occurred while searching places." });
-//     return; // 오류 발생 시 함수를 종료합니다.
-//   }
-// });
 
 //module.exports.handler = serverless(app);
-app.listen(3000);
