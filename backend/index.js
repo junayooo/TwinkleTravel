@@ -11,20 +11,17 @@ const axios = require("axios");
 
 require("dotenv").config();
 
-const serverless = require("serverless-http");
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-// https://mbtrip.du.r.appspot.com
 // CORS 이슈 해결
 let corsOptions = {
-  origin: "*",
-  credentials: true,
-};
-
+    origin: '*',
+    credentials: true
+}
 app.use(cors(corsOptions));
 
 app.use(express.json());
@@ -73,9 +70,7 @@ app.post("/map", async function (req, res) {
       console.log(Money);
       res.json(obtainedPlaces);
     } else {
-      console.log(error);
       res.status(500).send({ error: "Error occurred while searching places." });
-
       return; // 오류 발생 시 함수를 종료합니다.
     }
   } catch (error) {
@@ -126,7 +121,7 @@ app.post("/travelGuide", async function (req, res) {
     // },
   ];
   console.log(obtainedPlaces);
-  while (userMessages.length !== 0 || assistantMessages.length !== 0) {
+  while (userMessages.length !== 0 || assistantMessages.length !== 0) { 
     if (userMessages.length !== 0) {
       messages.push({
         role: "user",
@@ -177,14 +172,5 @@ app.get("/travelLogs", async function (req, res) {
   }
 });
 
-app.get("/test", function (req, res) {
-  try {
-    console.log("test");
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 app.listen(3000);
-
-//module.exports.handler = serverless(app);

@@ -12,9 +12,6 @@ let Plan = "";
 let Types = [];
 //textsearch
 // let searchTexts = [];
-
-app.use(cors(corsOptions))
-
 function spinner() {
   document.getElementById("loader").style.display = "block";
 }
@@ -47,14 +44,10 @@ async function start() {
 
   //장소유형
   Types = [
-    "amusement_park",
-    "aquarium",
     "art_gallery",
     "museum",
     "shopping_mall",
     "tourist_attraction",
-    "landmark",
-    "zoo",
     "park",
     "bar",
     "cafe",
@@ -66,7 +59,7 @@ async function start() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("chat").style.display = "block";
 
-  const placeRequest =  await fetch("http://localhost:3000/map", {
+  const placeRequest = await fetch("http://localhost:3000/map", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -78,7 +71,6 @@ async function start() {
       // searchTexts: searchTexts,
     }),
   });
-
 
   const obtainedPlaces = await placeRequest.json();
   // ObtainedPlaces=obtainedPlaces;
@@ -98,7 +90,7 @@ const sendMessage = async () => {
 
   chatInput.value = "";
 
-  const response = await fetch("https://port-0-twinkletravel-7xwyjq992llixmegsp.sel4.cloudtype.app/travelGuide", {
+  const response = await fetch("http://localhost:3000/travelGuide", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -136,7 +128,7 @@ document
   .addEventListener("click", sendMessage);
 
 function fetchTravelLogs() {
-  fetch("https://port-0-twinkletravel-7xwyjq992llixmegsp.sel4.cloudtype.app/travelLogs")
+  fetch("http://localhost:3000/travelLogs")
     .then((response) => response.json())
     .then((data) => {
       const travelList = document.getElementById("travelList");
