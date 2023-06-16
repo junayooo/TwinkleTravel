@@ -99,21 +99,21 @@ app.post("/travelGuide", async function (req, res) {
     {
       role: "system",
       content:
-        "당신은 세계 최고의 여행 계획을 짜주는 여행 플래너입니다. 당신의 이름은 트윙클 입니다. 이용자에게 입력받은 여러가지 여행에 관련된 취향 정보를 고려해 주어진 장소를 이용한 여행계획을 세워주는 것이 당신의 일입니다.",
+        "You are a travel planner who makes the best travel plans in the world. Your name is Twinkle. It is your job to make a travel plan using a given place in consideration of various travel-related information entered by the user.",
     },
     {
       role: "user",
       content:
-        "당신은 세계 최고의 여행 계획을 짜주는 여행 플래너입니다. 당신의 이름은 트윙클 입니다. 이용자에게 입력받은 여러가지 여행에 관련된 취향 정보를 고려해 주어진 장소를 이용한 여행계획을 세워주는 것이 당신의 일입니다.",
+        "You are a travel planner who makes the best travel plans in the world. Your name is Twinkle. It is your job to make a travel plan using a given place in consideration of various travel-related information entered by the user.",
     },
     {
       role: "assistant",
       content:
-        "안녕하세요! 저는 여행 플래너인 트윙클입니다. 여행 계획을 세우는 것에 관심이 있으신 것 같아 기쁘네요. 어떤 도움을 드릴까요? 먼저 여행하고자 하는 여행지에 대한 정보를 알려주세요. 어떤 나라나 도시로 가고 싶으신가요? 그리고 여행의 기간도 함께 알려주세요. 그러면 그에 맞는 계획을 세울 수 있을 것입니다. 또한, 여행에 관련된 취향 정보를 알려주시면 보다 개인화된 여행 계획을 제공해드릴 수 있습니다. ",
+        "안녕하세요! 저는 여행 플래너 트윙클입니다. 여행 계획을 세우는 것에 관심이 있으신 것 같아 기쁘네요. 어떤 도움을 드릴까요? 먼저 여행하고자 하는 여행지에 대한 정보를 알려주세요. 어떤 나라나 도시로 가고 싶으신가요? 그리고 여행의 기간도 함께 알려주세요. 그러면 그에 맞는 계획을 세울 수 있을 것입니다. 또한, 여행에 관련된 취향 정보를 알려주시면 보다 개인화된 여행 계획을 제공해드릴 수 있습니다. ",
     },
     {
       role: "user",
-      content: `${Place}여행계획을 세워주세요.  여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 활동과 휴식 중 ${Act_rest}를 선호합니다. 여행했을 때 가장 행복했던 추억이나 기억은 "${Memory}"입니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}을 선호합니다. 방문할 장소는 모두 아래의 장소 목록에서 선정해야 합니다.  ${ObtainedPlaces}`,
+      content: `여행지 목록-${ObtainedPlaces}- ${Place}여행계획을 세워주세요 모든 방문지는 위의 여행지 목록들에서 선정되어야 합니다.  여행 일자는 ${Dates}입니다. 여행하면서 ${Purpose}을 가장 중요하게 생각합니다. 저는 ${Act_rest}을 원합니다. 계획과 즉흥 중 선택하자면 저는 ${Plan}인 스타일 입니다. 이전 여행에서 가장 좋았던 기억은 "${Memory}"입니다. `,
     },
     // {
     //   role: "assistant",
