@@ -44,14 +44,10 @@ async function start() {
 
   //장소유형
   Types = [
-    "amusement_park",
-    "aquarium",
     "art_gallery",
     "museum",
     "shopping_mall",
     "tourist_attraction",
-    "landmark",
-    "zoo",
     "park",
     "bar",
     "cafe",
@@ -63,7 +59,7 @@ async function start() {
   document.getElementById("intro").style.display = "none";
   document.getElementById("chat").style.display = "block";
 
-  const placeRequest = await fetch("http:localhost:3000/map", {
+  const placeRequest = await fetch("http://localhost:3000/map", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -94,7 +90,7 @@ const sendMessage = async () => {
 
   chatInput.value = "";
 
-  const response = await fetch("http:localhost:3000/travelGuide", {
+  const response = await fetch("http://localhost:3000/travelGuide", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -132,7 +128,7 @@ document
   .addEventListener("click", sendMessage);
 
 function fetchTravelLogs() {
-  fetch("http:localhost:3000/travelLogs")
+  fetch("http://localhost:3000/travelLogs")
     .then((response) => response.json())
     .then((data) => {
       const travelList = document.getElementById("travelList");
